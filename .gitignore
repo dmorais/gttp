@@ -105,6 +105,9 @@ ENV/
 app/html-files-report
 app/json-files-report
 app/yml-file-tools
+html-files-report
+json-files-report
+yml-file-tools
 
 # files
 app/test.galaxy.yml
