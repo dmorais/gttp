@@ -1,5 +1,5 @@
 tools:
-- name: ebi_search_rest_results
-  owner: iuc
-  tool_panel_section_label: Get Data
+- name: add_input_name_as_column
+  owner: mvdbeek
+  tool_panel_section_label: Text Manipulation
   tool_shed_url: toolshed.g2.bx.psu.edu
