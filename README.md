@@ -44,12 +44,18 @@ Before running the pipeline you must go to your Galaxy instance and create an AP
 
 This key must be exported as an enviromental variable.
 You can do it in your session by 
+
+```
 export API_KEY=<you-key>
+```
 
 or by adding this line to your .bashrc
 
 You also must export the Galaxy url as an env. variable
+
+```
 export GURL=<galaxy-url>
+```
 
 Both vars must be written as API_KEY and GURL
 
