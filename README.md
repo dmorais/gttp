@@ -81,7 +81,7 @@ python gttp.py -y <list-of-tools.yml>
 # By default the program output to cwd, to modify this behavior
 python gttp.py -o <path-to-output-dir>
 
-# GTTP splits the yml file into chunks of 50 tools per yml (this prevents the tool to hang due to proxy problems)
+# GTTP splits the yml file into chunks of 50 tools per yml (this prevents the tool from hanging due to proxy/network problems)
 # You can modify this by passing -l with a multiple of 4 
 python gttp.py -l 400 
 
@@ -95,6 +95,8 @@ python gttp.py -c
 ## Using with Docker
 
 It is advisable to run the test case before running the whole pipeline.
+
+*** Before running, export the API_KEY and GURL env. vars as explained above ***
 
 To Run the test simply run
 
@@ -116,7 +118,7 @@ container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app
 
 ```
 
-Run the pipeline from a yml file (list of tools) inside the host machine and saving the results inside the host machine.
+To run the pipeline from a yml file (list of tools) inside the host machine and save the results inside the host machine.
 
 ```
 # Fisrt create a input dir (where the yml file will be). Put the yml with a list of tools there.
