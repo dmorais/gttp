@@ -46,7 +46,7 @@ This key must be exported as an enviromental variable.
 You can do it in your session by 
 
 ```
-export API_KEY=<you-key>
+export API_KEY=<your-key>
 ```
 
 or by adding this line to your .bashrc
@@ -88,7 +88,36 @@ python gttp.py -c
 ## Using with Docker
 
 It is advisable to run the test case before running the whole pipeline.
+To Run the test simply run
 
 ```
+docker build -t gttp:<version> .
+
+docker run -it --name gttp-test -e API_KEY -e GURL gttp:<version>
+
+# NOTE
+# -e API_KEY and -e GURL passes those env. variable to the container.
+```
+
+Run the pipeline, fetch all tools and saving the results inside the container
+
+```
+container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py 
+
+```
+
+Run the pipeline from a yml file (list of tools) inside the host machine and saving the results inside the host machine.
+
+```
+# fisrt create a input dir (where the yml file will be)
+# Then create the output dir
+
+container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y input/test.galaxy.yml -o /home/gttp/output
+```
+
+Clear output from previous run
+
+```
+container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py  -o <ouput-dir>
 
 ```
