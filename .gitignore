@@ -113,6 +113,3 @@ yml-file-tools
 # files
 app/test.galaxy.yml
 
-# Docker
-Dockerfile
-.dockerignore
