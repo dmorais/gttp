@@ -1,18 +1,19 @@
 # gttp
 ## Galaxy test tools pipeline
 
-gttp is a pipeline to automatically test Galaxy tools and generate html reports about the success or fail of a tool.
+gttp is a pipeline to automatically test Galaxy tools and generate html reports about the success or fail of a test.
 
 ## Requirements
-Although this can be used as a standalone script, gttp was designed to run from a docker container. Hence all requirements should be taken for you.
-In case you want to run as a standalone, make sure you are running python 3.8 or higher.
+Although this can be used as a standalone script, gttp was designed to run from a docker container. Hence all requirements are be taken care for you.
+
+In case you want to run as a standalone, make sure you are running python >=3.8 .
+
 To install the python dependencies run 
 
 ```
 pip install -r requirements.txt
 ```
 
-## Standalone pipeline
 
 ### Help
 ```
@@ -39,17 +40,25 @@ optional arguments:
                         Dir where all outputs will be written to. Default current dir
 
 ```
+
+## Standalone pipeline
+
 #### *** IMPORTANT ****
-Before running the pipeline you must go to your Galaxy instance and create an API_KEY.
+Before running the pipeline you must go to your Galaxy instance and create an API_KEY. 
+```
+(User -> Preferences -> Manage API key -> Create a key)
+
+```
 
 This key must be exported as an enviromental variable.
+
 You can do it in your session by 
 
 ```
 export API_KEY=<your-key>
 ```
 
-or by adding this line to your .bashrc
+or by adding the above line to your .bashrc
 
 You also must export the Galaxy url as an env. variable
 
@@ -64,7 +73,6 @@ Both vars must be written as API_KEY and GURL
 
 
 # Get a list of all Galaxy tools and test them all
-
 python gttp.py 
 
 # Test all tools contained in a list of tools
@@ -78,7 +86,6 @@ python gttp.py -o <path-to-output-dir>
 python gttp.py -l 400 
 
 # Cleaning previous runs
-
 python gttp.py -c 
 
 ```
@@ -88,18 +95,21 @@ python gttp.py -c
 ## Using with Docker
 
 It is advisable to run the test case before running the whole pipeline.
+
 To Run the test simply run
 
 ```
 docker build -t gttp:<version> .
 
 docker run -it --name gttp-test -e API_KEY -e GURL gttp:<version>
-
-# NOTE
-# -e API_KEY and -e GURL passes those env. variable to the container.
 ```
 
-Run the pipeline, fetch all tools and saving the results inside the container
+### NOTE
+
+***-e API_KEY and -e GURL passes those env. variable to the container.***
+
+
+Run the pipeline, fetch all tools and save the results inside the container
 
 ```
 container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py 
@@ -109,7 +119,7 @@ container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app
 Run the pipeline from a yml file (list of tools) inside the host machine and saving the results inside the host machine.
 
 ```
-# fisrt create a input dir (where the yml file will be)
+# Fisrt create a input dir (where the yml file will be). Put the yml with a list of tools there.
 # Then create the output dir
 
 container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y /home/gttp/input/test.galaxy.yml -o /home/gttp/output
