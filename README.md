@@ -43,7 +43,7 @@ optional arguments:
 
 ## Standalone pipeline
 
-#### *** IMPORTANT ****
+#### ***IMPORTANT***
 Before running the pipeline you must go to your Galaxy instance and create an API_KEY. 
 ```
 (User -> Preferences -> Manage API key -> Create a key)
@@ -96,7 +96,7 @@ python gttp.py -c
 
 It is advisable to run the test case before running the whole pipeline.
 
-*** Before running, export the API_KEY and GURL env. vars as explained above ***
+***Before running, export the API_KEY and GURL env. vars as explained above***
 
 To Run the test simply run
 
