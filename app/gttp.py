@@ -186,12 +186,12 @@ def main():
 
     parser.add_argument('-s', '--sleep', action='store', type=int,
                         help=' Interval between submission of tool files to be tested. Default=20 min. This is enough to test about 40 tools at time.',
-                        default=10,
+                        default=1200,
                         required=False)
 
     parser.add_argument('-l', '--lines', type=int,
                         help=' Set it to a multiple of 4. This values is used to split the yml tool list into chunks. The defaul is 200 which put 50 tools on each yml file.',
-                        default=4,
+                        default=200,
                         required=False)
 
     parser.add_argument('-c', '--clear', action='store_true',

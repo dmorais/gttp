@@ -112,7 +112,7 @@ Run the pipeline from a yml file (list of tools) inside the host machine and sav
 # fisrt create a input dir (where the yml file will be)
 # Then create the output dir
 
-container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y input/test.galaxy.yml -o /home/gttp/output
+container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y /home/gttp/input/test.galaxy.yml -o /home/gttp/output
 ```
 
 Clear output from previous run
