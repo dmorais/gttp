@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 
 COPY . /home/gttp/
 
-CMD ["python", "./app/gttp.py", "-y", "./test/test.galaxy.yml"]
+CMD ["python", "./app/gttp.py", "-y", "./test/test.galaxy.yml", "-s", "10"]
