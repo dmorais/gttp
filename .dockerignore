@@ -1,0 +1,13 @@
+# git
+**/.git
+**/.cache
+**/.gitignore
+
+
+
+#python
+**/./app/__pycache__/
+
+#dev files
+**/app/test.galaxy.yml
+**/.vscode
