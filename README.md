@@ -101,7 +101,7 @@ It is advisable to run the test case before running the whole pipeline.
 To Run the test simply run
 
 ```
-docker build -t gttp:<version> .
+docker pull docker.io/dmorais/gttp:<version>
 
 docker run -it --name gttp-test -e API_KEY -e GURL gttp:<version>
 ```
@@ -114,7 +114,7 @@ docker run -it --name gttp-test -e API_KEY -e GURL gttp:<version>
 Run the pipeline, fetch all tools and save the results inside the container
 
 ```
-container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py 
+docker container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py 
 
 ```
 
@@ -124,12 +124,49 @@ To run the pipeline from a yml file (list of tools) inside the host machine and 
 # Fisrt create a input dir (where the yml file will be). Put the yml with a list of tools there.
 # Then create the output dir
 
-container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y /home/gttp/input/test.galaxy.yml -o /home/gttp/output
+docker container run -it --name gttp-test -e API_KEY -e GURL --mount src=/path-to-input-dir,dst=/home/gttp/input,type=bind  --mount src=/path-to-output-dir,dst=/home/gttp/output,type=bind gttp:<version> python app/gttp.py -y /home/gttp/input/test.galaxy.yml -o /home/gttp/output
+
+### IN CASE YOUR DOCKER DOES NOT SUPPORT THE --mount OPTION ###
+docker container run -it --name gttp-test -e API_KEY -e GURL -v /path-to-input-dir:/home/gttp/input  -v /path-to-output-dir:/home/gttp/output docker.io/dmorais/gttp:v2 python app/gttp.py -y /home/gttp/input/test.galaxy.yml -o /home/gttp/output
+
 ```
 
 Clear output from previous run
 
 ```
-container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py  -o <ouput-dir>
+docker container run -it --name gttp-test -e API_KEY -e GURL  gttp:<version> python app/gttp.py  -o <ouput-dir>
+
+```
+
+# Interacting with pipeline from within the container
+
+```
+# Start in dectached mode and pass /bin/bash as an argument
+
+docker container run -dit --name gttp-test -e API_KEY -e GURL  docker.io/dmorais/gttp:v2  /bin/bash
+
+# Get the container id
+docker container attach <container_id>
+
+# At this point the pipeline will not be running. You must run 
+python app/gttp.py ARGS            
+
+```
+
+# Interacting after the container has stopped
+
+```
+# Get container name
+docker container ls -a
+
+# Start the container
+docker container start <container-name>
+
+# Exec in detached mode
+docker exec -dit <container-name>  /bin/bash
+
+# Attach the container
+docker container attach  <container-name>
+
 
 ```
