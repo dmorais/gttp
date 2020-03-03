@@ -66,8 +66,9 @@ def split_yml(split_tool_dir, yml_file, lines):
 
     chunk = 1
     check = 0
+    file_base_name = yml_file[:-4]
     file_chunk = open(os.path.join(
-        split_tool_dir, "galaxy-tool-chunk" + str(chunk) + ".yml"), 'w')
+        split_tool_dir, file_base_name + str(chunk) + ".yml"), 'w')
 
     file = open(yml_file)
 
@@ -84,7 +85,7 @@ def split_yml(split_tool_dir, yml_file, lines):
 
         else:
             if check == 1:
-                file_chunk = open(os.path.join(split_tool_dir, "galaxy-tool-chunk" + str(chunk) + ".yml"), 'w')
+                file_chunk = open(os.path.join(split_tool_dir, file_base_name + str(chunk) + ".yml"), 'w')
                 file_chunk.write("tools:\n")
                 check = 0
 
@@ -204,6 +205,11 @@ def main():
                         default=os.getcwd(),
                         required=False)
 
+    parser.add_argument('--no_split', action='store_true',
+                        help='Do not split tool list into chunk-files',
+                        default=False,
+                        required=False)
+
     args = parser.parse_args()
 
     # Delete dirs of previous runs
@@ -218,8 +224,11 @@ def main():
     # If no tool list provided, get tools from Galaxy
     yml_file = args.yml_file if args.yml_file is not None else get_tool_list(args.out_dir)
 
-    # Split yml
-    split_yml(split_tool_dir, yml_file, args.lines)
+    if args.no_split is True:
+        shutil.copyfile(yml_file,os.path.join(split_tool_dir,os.path.basename(yml_file)))
+    else:
+        # Split yml
+        split_yml(split_tool_dir, yml_file, args.lines)
 
     # Test Tools
     list_of_yml = glob.glob(os.path.join(split_tool_dir, "*.yml"))
